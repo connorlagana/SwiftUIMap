@@ -20,6 +20,15 @@ class MainController: UIViewController {
         
         view.addSubview(mapView)
         mapView.fillSuperview()
+        
+        setupRegionForMap()
+    }
+    
+    fileprivate func setupRegionForMap() {
+        let coordinate = CLLocationCoordinate2D(latitude: 40.5, longitude: -74.5)
+        let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
     }
 }
 
