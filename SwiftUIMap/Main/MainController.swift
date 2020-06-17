@@ -7,22 +7,39 @@
 //
 
 import UIKit
+import SwiftUI
 import MapKit
+import LBTATools
 
 class MainController: UIViewController {
+    
+    let mapView = MKMapView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let mapView = MKMapView(frame: view.frame)
-        
         view.addSubview(mapView)
-        mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.fillSuperview()
+    }
+}
+
+// SwiftUI Preview
+struct MainPreview: PreviewProvider {
+    static var previews: some View {
+        ContainerView().edgesIgnoringSafeArea(.all)
+//        Text("I miss alex :(")
+    }
+    
+    struct ContainerView: UIViewControllerRepresentable {
+        func makeUIViewController(context: Context) -> MainController {
+            return MainController()
+        }
         
-        mapView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        mapView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        mapView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        func updateUIViewController(_ uiViewController: MainController, context: Context) {
+            
+        }
         
-        view.backgroundColor = .red
+        typealias UIViewControllerType = MainController
+    
     }
 }
