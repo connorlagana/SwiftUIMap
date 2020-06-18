@@ -23,6 +23,32 @@ extension MainController: MKMapViewDelegate {
     }
 }
 
+extension MKMapItem {
+    func address() -> String {
+        var addressString = ""
+        if placemark.subThoroughfare != nil {
+            addressString = placemark.subThoroughfare! + " "
+        }
+        if placemark.thoroughfare != nil {
+            addressString += placemark.thoroughfare! + ", "
+        }
+        if placemark.postalCode != nil {
+            addressString += placemark.postalCode! + " "
+        }
+        if placemark.locality != nil {
+            addressString += placemark.locality! + ", "
+        }
+        if placemark.administrativeArea != nil {
+            addressString += placemark.administrativeArea! + " "
+        }
+        if placemark.country != nil {
+            addressString += placemark.country!
+        }
+        
+        return(addressString)
+    }
+}
+
 class MainController: UIViewController {
     
     let mapView = MKMapView()
@@ -44,7 +70,7 @@ class MainController: UIViewController {
     
     fileprivate func performLocalSearch() {
         let req = MKLocalSearch.Request()
-        req.naturalLanguageQuery = "airport"
+        req.naturalLanguageQuery = "sushi"
         req.region = mapView.region
         
         let localSearch = MKLocalSearch(request: req)
@@ -57,28 +83,7 @@ class MainController: UIViewController {
             //success
             resp?.mapItems.forEach({ (mapItem) in
                 
-                let placemark = mapItem.placemark
-                var addressString = ""
-                if placemark.subThoroughfare != nil {
-                    addressString = placemark.subThoroughfare! + " "
-                }
-                if placemark.thoroughfare != nil {
-                    addressString += placemark.thoroughfare! + ", "
-                }
-                if placemark.postalCode != nil {
-                    addressString += placemark.postalCode! + " "
-                }
-                if placemark.locality != nil {
-                    addressString += placemark.locality! + ", "
-                }
-                if placemark.administrativeArea != nil {
-                    addressString += placemark.administrativeArea! + " "
-                }
-                if placemark.country != nil {
-                    addressString += placemark.country!
-                }
-                
-                print(addressString)
+                print(mapItem.address())
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
