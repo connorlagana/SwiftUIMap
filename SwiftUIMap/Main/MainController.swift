@@ -12,9 +12,10 @@ import MapKit
 import LBTATools
 
 extension MainController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "string")
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
         annotationView.canShowCallout = true
         
         return annotationView
@@ -36,16 +37,45 @@ class MainController: UIViewController {
         
         setupRegionForMap()
         
-        setupAnnotations()
+//        setupAnnotations()
+        
+        performLocalSearch()
     }
     
-    fileprivate func setupAnnotations() {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
-        annotation.title = "San Francisco"
-        annotation.subtitle = "CA"
-        mapView.addAnnotation(annotation)
+    fileprivate func performLocalSearch() {
+        let req = MKLocalSearch.Request()
+        req.naturalLanguageQuery = "Apple"
+        req.region = mapView.region
+        
+        let localSearch = MKLocalSearch(request: req)
+        localSearch.start { (resp, err) in
+            if let err = err {
+                print("Failed local search: \(err)")
+                return
+            }
+            
+            //success
+            resp?.mapItems.forEach({ (mapItem) in
+                
+                print(mapItem.name ?? "")
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = mapItem.placemark.coordinate
+                annotation.title = mapItem.name
+                
+                self.mapView.addAnnotation(annotation)
+            })
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        }
     }
+    
+//    fileprivate func setupAnnotations() {
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
+//        annotation.title = "San Francisco"
+//        annotation.subtitle = "CA"
+//        mapView.addAnnotation(annotation)
+//    }
     
     fileprivate func setupRegionForMap() {
         let coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
