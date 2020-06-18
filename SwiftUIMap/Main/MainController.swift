@@ -22,11 +22,19 @@ class MainController: UIViewController {
         mapView.fillSuperview()
         
         setupRegionForMap()
+        
+        setupAnnotations()
+    }
+    
+    fileprivate setupAnnotations() {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
+        mapView.addAnnotation(<#T##annotation: MKAnnotation##MKAnnotation#>)
     }
     
     fileprivate func setupRegionForMap() {
-        let coordinate = CLLocationCoordinate2D(latitude: 40.5, longitude: -74.5)
-        let span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+        let coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
+        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
