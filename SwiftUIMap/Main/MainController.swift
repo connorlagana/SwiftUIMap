@@ -26,10 +26,10 @@ class MainController: UIViewController {
         setupAnnotations()
     }
     
-    fileprivate setupAnnotations() {
+    fileprivate func setupAnnotations() {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: 37.766, longitude: -122.4279)
-        mapView.addAnnotation(<#T##annotation: MKAnnotation##MKAnnotation#>)
+        mapView.addAnnotation(annotation)
     }
     
     fileprivate func setupRegionForMap() {
