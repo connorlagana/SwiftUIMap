@@ -72,21 +72,34 @@ class MainController: UIViewController {
     let searchTextField = UITextField(placeholder: "Search")
     
     fileprivate func setupSearchUI() {
-        
-        
-        let whiteContainer = UIView(backgroundColor: .white)
-        
-        //listen for text change to perform search
-        
-        view.addSubview(whiteContainer)
-        whiteContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
-        
-        whiteContainer.stack(searchTextField).withMargins(.allSides(16))
+            let whiteContainer = UIView(backgroundColor: .white)
+            view.addSubview(whiteContainer)
+            whiteContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+            
+            whiteContainer.stack(searchTextField).withMargins(.allSides(16))
+            
+            // listen for text changes and then perform new search
+            // OLD SCHOOL
+            searchTextField.addTarget(self, action: #selector(handleSearchChange), for: .editingChanged)
+            
+            
+            // NEW SCHOOL Search Throttling
+            // search on the last keystroke of text changes and basically wait 500 milliseconds
+//            NotificationCenter.default
+//                .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
+//                .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+//                .sink { (_) in
+//                    self.performLocalSearch()
+//            }
+        }
+    
+    @objc func handleSearchChange() {
+        performLocalSearch()
     }
     
     fileprivate func performLocalSearch() {
         let req = MKLocalSearch.Request()
-        req.naturalLanguageQuery = "sushi"
+        req.naturalLanguageQuery = searchTextField.text
         req.region = mapView.region
         
         let localSearch = MKLocalSearch(request: req)
@@ -97,6 +110,11 @@ class MainController: UIViewController {
             }
             
             //success
+            //remove old annotations
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            
+            
+            //add annotations
             resp?.mapItems.forEach({ (mapItem) in
                 
                 print(mapItem.address())
