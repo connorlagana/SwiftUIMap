@@ -66,6 +66,22 @@ class MainController: UIViewController {
 //        setupAnnotations()
         
         performLocalSearch()
+        setupSearchUI()
+    }
+    
+    let searchTextField = UITextField(placeholder: "Search")
+    
+    fileprivate func setupSearchUI() {
+        
+        
+        let whiteContainer = UIView(backgroundColor: .white)
+        
+        //listen for text change to perform search
+        
+        view.addSubview(whiteContainer)
+        whiteContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 50))
+        
+        whiteContainer.stack(searchTextField).withMargins(.allSides(16))
     }
     
     fileprivate func performLocalSearch() {
