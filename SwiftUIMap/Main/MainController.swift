@@ -44,7 +44,7 @@ class MainController: UIViewController {
     
     fileprivate func performLocalSearch() {
         let req = MKLocalSearch.Request()
-        req.naturalLanguageQuery = "Apple"
+        req.naturalLanguageQuery = "airport"
         req.region = mapView.region
         
         let localSearch = MKLocalSearch(request: req)
@@ -57,7 +57,28 @@ class MainController: UIViewController {
             //success
             resp?.mapItems.forEach({ (mapItem) in
                 
-                print(mapItem.name ?? "")
+                let placemark = mapItem.placemark
+                var addressString = ""
+                if placemark.subThoroughfare != nil {
+                    addressString = placemark.subThoroughfare! + " "
+                }
+                if placemark.thoroughfare != nil {
+                    addressString += placemark.thoroughfare! + ", "
+                }
+                if placemark.postalCode != nil {
+                    addressString += placemark.postalCode! + " "
+                }
+                if placemark.locality != nil {
+                    addressString += placemark.locality! + ", "
+                }
+                if placemark.administrativeArea != nil {
+                    addressString += placemark.administrativeArea! + " "
+                }
+                if placemark.country != nil {
+                    addressString += placemark.country!
+                }
+                
+                print(addressString)
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = mapItem.placemark.coordinate
