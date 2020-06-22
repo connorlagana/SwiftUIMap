@@ -79,24 +79,31 @@ class MainController: UIViewController {
         
         view.addSubview(locationsView)
         
-        locationsView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 150))
+        locationsView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, size: .init(width: 0, height: 150))
     }
     
     class LocationCell: LBTAListCell<String> {
         override func setupViews() {
-            backgroundColor = .yellow
+            backgroundColor = .white
+            setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .black)
+            layer.cornerRadius = 5
         }
     }
     
     class LocationsCarouselController: LBTAListController<LocationCell, String>, UICollectionViewDelegateFlowLayout {
         
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            .init(top: 0, left: 16, bottom: 0, right: 16)
+        }
+        
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return .init(width: view.frame.width, height: view.frame.height)
+            return .init(width: view.frame.width - 64, height: view.frame.height)
         }
         
         override func viewDidLoad() {
             super.viewDidLoad()
-            
+            collectionView.backgroundColor = .clear
+            collectionView.clipsToBounds = false
             self.items = ["1", "2", "3"]
         }
     }
