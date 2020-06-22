@@ -9,24 +9,45 @@
 import Foundation
 import UIKit
 import LBTATools
+import MapKit
 
-class LocationCell: LBTAListCell<String> {
+class LocationCell: LBTAListCell<MKMapItem> {
+    
+    let label = UILabel(text: "Location", font: .boldSystemFont(ofSize: 16))
+    
+    override var item: MKMapItem! {
+        didSet {
+            label.text = item.name
+        }
+    }
+    
     override func setupViews() {
         backgroundColor = .white
         setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .black)
         layer.cornerRadius = 5
+        
+        stack(label).withMargins(.allSides(16))
     }
 }
 
-class LocationsCarouselController: LBTAListController<LocationCell, String> {
+class LocationsCarouselController: LBTAListController<LocationCell, MKMapItem> {
     
+    weak var mainController: MainController?
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let annotations = mainController?.mapView.annotations
+        annotations?.forEach({ (annotation) in
+            if annotation.title == self.items[indexPath.item].name {
+                mainController?.mapView.selectAnnotation(annotation, animated: true)
+            }
+        })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .clear
         collectionView.clipsToBounds = false
-        self.items = ["1", "2", "3"]
+        
     }
 }
 

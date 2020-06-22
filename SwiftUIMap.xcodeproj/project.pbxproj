@@ -15,6 +15,7 @@
 		4373621524996CA0005E6C12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4373621324996CA0005E6C12 /* LaunchScreen.storyboard */; };
 		4373621E24996E45005E6C12 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373621D24996E45005E6C12 /* MainController.swift */; };
 		43736221249974DA005E6C12 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 43736220249974DA005E6C12 /* LBTATools */; };
+		4376EA4224A127CE0046B76F /* MKMapItem+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376EA4124A127CE0046B76F /* MKMapItem+Address.swift */; };
 		43A375E024A05EB100FCAD82 /* LocationCarouselController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A375DF24A05EB100FCAD82 /* LocationCarouselController.swift */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +29,7 @@
 		4373621424996CA0005E6C12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4373621624996CA0005E6C12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4373621D24996E45005E6C12 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		4376EA4124A127CE0046B76F /* MKMapItem+Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapItem+Address.swift"; sourceTree = "<group>"; };
 		43A375DF24A05EB100FCAD82 /* LocationCarouselController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCarouselController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				4373621D24996E45005E6C12 /* MainController.swift */,
+				4376EA4124A127CE0046B76F /* MKMapItem+Address.swift */,
 				43A375DF24A05EB100FCAD82 /* LocationCarouselController.swift */,
 			);
 			path = Main;
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4376EA4224A127CE0046B76F /* MKMapItem+Address.swift in Sources */,
 				4373621E24996E45005E6C12 /* MainController.swift in Sources */,
 				4373620924996C9D005E6C12 /* AppDelegate.swift in Sources */,
 				4373620B24996C9D005E6C12 /* SceneDelegate.swift in Sources */,
