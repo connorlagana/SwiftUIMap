@@ -67,6 +67,15 @@ class MainController: UIViewController {
         
         performLocalSearch()
         setupSearchUI()
+        setupLocationsCarousel()
+    }
+    
+    fileprivate func setupLocationsCarousel() {
+        let locationsView = UIView(backgroundColor: .red)
+        
+        view.addSubview(locationsView)
+        
+        locationsView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 150))
     }
     
     let searchTextField = UITextField(placeholder: "Search")
