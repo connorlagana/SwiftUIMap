@@ -70,12 +70,35 @@ class MainController: UIViewController {
         setupLocationsCarousel()
     }
     
+    let locationsController = LocationsCarouselController(scrollDirection: .horizontal)
+    
     fileprivate func setupLocationsCarousel() {
-        let locationsView = UIView(backgroundColor: .red)
+        
+        let locationsView = locationsController.view!
+        
         
         view.addSubview(locationsView)
         
         locationsView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16), size: .init(width: 0, height: 150))
+    }
+    
+    class LocationCell: LBTAListCell<String> {
+        override func setupViews() {
+            backgroundColor = .yellow
+        }
+    }
+    
+    class LocationsCarouselController: LBTAListController<LocationCell, String>, UICollectionViewDelegateFlowLayout {
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            return .init(width: view.frame.width, height: view.frame.height)
+        }
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            self.items = ["1", "2", "3"]
+        }
     }
     
     let searchTextField = UITextField(placeholder: "Search")
