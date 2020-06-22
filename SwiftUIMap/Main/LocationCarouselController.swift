@@ -18,7 +18,19 @@ class LocationCell: LBTAListCell<String> {
     }
 }
 
-class LocationsCarouselController: LBTAListController<LocationCell, String>, UICollectionViewDelegateFlowLayout {
+class LocationsCarouselController: LBTAListController<LocationCell, String> {
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.backgroundColor = .clear
+        collectionView.clipsToBounds = false
+        self.items = ["1", "2", "3"]
+    }
+}
+
+extension LocationsCarouselController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         .init(top: 0, left: 16, bottom: 0, right: 16)
@@ -28,10 +40,7 @@ class LocationsCarouselController: LBTAListController<LocationCell, String>, UIC
         return .init(width: view.frame.width - 64, height: view.frame.height)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView.backgroundColor = .clear
-        collectionView.clipsToBounds = false
-        self.items = ["1", "2", "3"]
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 12
     }
 }
