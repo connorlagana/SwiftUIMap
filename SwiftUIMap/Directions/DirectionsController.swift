@@ -14,19 +14,23 @@ import SwiftUI
 class DirectionsController: UIViewController {
     
     let mapView = MKMapView()
+    let navBar = UIView(backgroundColor: .init(red: 40/255, green: 240/255, blue: 175/255, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(mapView)
-        mapView.fillSuperview()
+//        mapView.fillSuperview()
+        
         setupRegionForMap()
         setupNavBarUI()
+        mapView.anchor(top: navBar.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
         
         mapView.showsUserLocation = true
+        
     }
     
     fileprivate func setupNavBarUI() {
-        let navBar = UIView(backgroundColor: .init(red: 40/255, green: 240/255, blue: 175/255, alpha: 1))
+        
         view.addSubview(navBar)
         navBar.setupShadow(opacity: 0.5, radius: 5)
         navBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -100, right: 0))
@@ -44,7 +48,7 @@ class DirectionsController: UIViewController {
 
 struct DirectionsPreview: PreviewProvider {
     static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
+        ContainerView().edgesIgnoringSafeArea(.all).environment(\.colorScheme, .light)
     }
     
     struct ContainerView: UIViewControllerRepresentable {
