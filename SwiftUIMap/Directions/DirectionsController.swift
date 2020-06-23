@@ -28,6 +28,7 @@ class DirectionsController: UIViewController {
         mapView.showsUserLocation = true
         
         setupStartEnd()
+        requestDirections()
     }
     
     fileprivate func setupStartEnd() {
@@ -43,6 +44,27 @@ class DirectionsController: UIViewController {
         mapView.addAnnotation(endAnno)
         
         mapView.showAnnotations(mapView.annotations, animated: true)
+    }
+    
+    fileprivate func requestDirections() {
+        let request = MKDirections.Request()
+        
+        let startPM = MKPlacemark(coordinate: .init(latitude: 37.7666, longitude: -122.42729))
+        let endPM = MKPlacemark(coordinate: .init(latitude: 37.3666, longitude: -122.02729))
+        
+        request.source = .init(placemark: startPM)
+        request.destination = .init(placemark: endPM)
+        
+        let directions = MKDirections(request: request)
+        directions.calculate { (resp, err) in
+            if let err = err {
+                print("Failed to find routing info: ", err)
+                return
+            }
+            //success
+            print("directions! fuck yeah!")
+        }
+        
     }
     
     fileprivate func setupNavBarUI() {
