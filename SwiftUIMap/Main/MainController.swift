@@ -54,7 +54,9 @@ class MainController: UIViewController, CLLocationManagerDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
-        guard let index = self.locationsController.items.firstIndex(where: {$0.name == view.annotation?.title}) else { return }
+        guard let custAnnotation = view.annotation as? CustomMapItemAnnotation else { return }
+        
+        guard let index = self.locationsController.items.firstIndex(where: {$0.name == custAnnotation.mapItem?.name}) else { return }
         
         self.locationsController.collectionView.scrollToItem(at: [0, index], at: .centeredHorizontally, animated: true)
     }
@@ -140,9 +142,12 @@ class MainController: UIViewController, CLLocationManagerDelegate {
             resp?.mapItems.forEach({ (mapItem) in
                 print(mapItem.address())
                 
-                let annotation = MKPointAnnotation()
+                let annotation = CustomMapItemAnnotation()
+                annotation.mapItem = mapItem
                 annotation.coordinate = mapItem.placemark.coordinate
-                annotation.title = mapItem.name
+                
+                annotation.title = "Location: " + (mapItem.name ?? "")
+                
                 self.mapView.addAnnotation(annotation)
                 
                 // tell my locationsCarouselController
@@ -154,6 +159,10 @@ class MainController: UIViewController, CLLocationManagerDelegate {
             
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
+    }
+    
+    class CustomMapItemAnnotation: MKPointAnnotation {
+        var mapItem: MKMapItem?
     }
     
     fileprivate func setupAnnotationsForMap() {
