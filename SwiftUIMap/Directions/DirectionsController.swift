@@ -92,16 +92,18 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         
         view.addSubview(navBar)
         navBar.setupShadow(opacity: 0.5, radius: 5)
-        navBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -100, right: 0))
+        navBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -120, right: 0))
         
         [startTextField, endTextField].forEach { (tf) in
-            tf.backgroundColor = .yellow
+//            tf.backgroundColor = .yellow
         }
         
-        let containerView = UIView(backgroundColor: .red)
+        let containerView = UIView(backgroundColor: .blue)
         navBar.addSubview(containerView)
         containerView.fillSuperviewSafeAreaLayoutGuide()
-        containerView.stack(startTextField, endTextField)
+        containerView
+            .stack(startTextField, endTextField, spacing: 12, distribution: .fillEqually)
+            .withMargins(.init(top: 0, left: 12, bottom: 12, right: 12))
     }
     
     fileprivate func setupRegionForMap() {
