@@ -27,6 +27,22 @@ class DirectionsController: UIViewController {
         
         mapView.showsUserLocation = true
         
+        setupStartEnd()
+    }
+    
+    fileprivate func setupStartEnd() {
+        let startAnno = MKPointAnnotation()
+        startAnno.coordinate = .init(latitude: 37.7666, longitude: -122.42729)
+        startAnno.title = "Start"
+        
+        let endAnno = MKPointAnnotation()
+        endAnno.coordinate = .init(latitude: 37.3666, longitude: -122.02729)
+        endAnno.title = "End"
+        
+        mapView.addAnnotation(startAnno)
+        mapView.addAnnotation(endAnno)
+        
+        mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
     fileprivate func setupNavBarUI() {
