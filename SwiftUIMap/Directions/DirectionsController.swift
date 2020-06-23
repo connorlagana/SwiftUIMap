@@ -85,11 +85,23 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         return polyLineRenderer
     }
     
+    let startTextField = UITextField(placeholder: "Start")
+    let endTextField = UITextField(placeholder: "End")
+    
     fileprivate func setupNavBarUI() {
         
         view.addSubview(navBar)
         navBar.setupShadow(opacity: 0.5, radius: 5)
         navBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -100, right: 0))
+        
+        [startTextField, endTextField].forEach { (tf) in
+            tf.backgroundColor = .yellow
+        }
+        
+        let containerView = UIView(backgroundColor: .red)
+        navBar.addSubview(containerView)
+        containerView.fillSuperviewSafeAreaLayoutGuide()
+        containerView.stack(startTextField, endTextField)
     }
     
     fileprivate func setupRegionForMap() {
