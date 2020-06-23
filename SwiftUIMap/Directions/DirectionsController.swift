@@ -11,13 +11,14 @@ import LBTATools
 import MapKit
 import SwiftUI
 
-class DirectionsController: UIViewController {
+class DirectionsController: UIViewController, MKMapViewDelegate {
     
     let mapView = MKMapView()
-    let navBar = UIView(backgroundColor: .init(red: 40/255, green: 240/255, blue: 175/255, alpha: 1))
+    let navBar = UIView(backgroundColor: .init(red: 120/255, green: 180/255, blue: 225/255, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         view.addSubview(mapView)
 //        mapView.fillSuperview()
         
@@ -63,8 +64,25 @@ class DirectionsController: UIViewController {
             }
             //success
             print("directions! fuck yeah!")
+            //getting first route possible
+            guard let route = resp?.routes.first else { return }
+            
+//            route.advisoryNotices
+//            route.distance
+//            route.expectedTravelTime
+//            route.polyline
+            
+            self.mapView.addOverlay(route.polyline)
+            //polyline still has to render after adding overlay
         }
         
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let polyLineRenderer = MKPolylineRenderer(overlay: overlay)
+        polyLineRenderer.strokeColor = .init(red: 120/255, green: 180/255, blue: 225/255, alpha: 1)
+        polyLineRenderer.lineWidth = 5
+        return polyLineRenderer
     }
     
     fileprivate func setupNavBarUI() {
