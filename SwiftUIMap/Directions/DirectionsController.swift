@@ -123,13 +123,33 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
                 )
             .withMargins(.init(top: 0, left: 12, bottom: 12, right: 12))
         
-        startTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeStartLocation)))
+        startTextField
+            .addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeStartLocation)))
+        endTextField
+            .addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeEndLocation)))
     }
     
     @objc fileprivate func handleChangeStartLocation() {
         
-        let vc = UIViewController()
-        vc.view.backgroundColor = .yellow
+        let vc = LocationSearchController()
+        
+        vc.selectionHandler = { [weak self] mapItem in
+            self?.startTextField.text = mapItem.name
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
+    
+    }
+    
+    @objc fileprivate func handleChangeEndLocation() {
+        
+        let vc = LocationSearchController()
+        
+        vc.selectionHandler = { [weak self] mapItem in
+            
+            self?.endTextField.text = mapItem.name
+        }
+        
         navigationController?.pushViewController(vc, animated: true)
     
     }

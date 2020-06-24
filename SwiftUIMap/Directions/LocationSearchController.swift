@@ -31,6 +31,16 @@ class LocationSearchCell: LBTAListCell<MKMapItem> {
 }
 
 class LocationSearchController: LBTAListController<LocationSearchCell, MKMapItem> {
+    
+    var selectionHandler: ((MKMapItem) -> ())?
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.item)
+        let mapItem = self.items[indexPath.item]
+        selectionHandler?(mapItem)
+        navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
