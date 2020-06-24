@@ -22,6 +22,8 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         view.addSubview(mapView)
 //        mapView.fillSuperview()
         
+        navigationController?.navigationBar.isHidden = true
+        
         setupRegionForMap()
         setupNavBarUI()
         mapView.anchor(top: navBar.bottomAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
@@ -120,6 +122,16 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
                 distribution: .fillEqually
                 )
             .withMargins(.init(top: 0, left: 12, bottom: 12, right: 12))
+        
+        startTextField.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleChangeStartLocation)))
+    }
+    
+    @objc fileprivate func handleChangeStartLocation() {
+        
+        let vc = UIViewController()
+        vc.view.backgroundColor = .yellow
+        navigationController?.pushViewController(vc, animated: true)
+    
     }
     
     fileprivate func setupRegionForMap() {
@@ -139,7 +151,7 @@ struct DirectionsPreview: PreviewProvider {
     
     struct ContainerView: UIViewControllerRepresentable {
         func makeUIViewController(context: UIViewControllerRepresentableContext<DirectionsPreview.ContainerView>) -> UIViewController {
-            return DirectionsController()
+            return UINavigationController(rootViewController: DirectionsController())
         }
         
         func updateUIViewController(_ uiViewController: DirectionsPreview.ContainerView.UIViewControllerType, context: UIViewControllerRepresentableContext<DirectionsPreview.ContainerView> ) {
