@@ -11,17 +11,28 @@ import UIKit
 import LBTATools
 import MapKit
 
-class LocationSearchCell: LBTAListCell<String> {
+class LocationSearchCell: LBTAListCell<MKMapItem> {
+    
+    override var item: MKMapItem! {
+        didSet {
+            nameLabel.text = item.name
+            print(item.name)
+        }
+    }
+    
+    let nameLabel = UILabel(text: "Name")
+    
     override func setupViews() {
-        backgroundColor = .green
+//        backgroundColor = .green
+        stack(nameLabel)
     }
 }
 
-class LocationSearchController: LBTAListController<LocationSearchCell, String> {
+class LocationSearchController: LBTAListController<LocationSearchCell, MKMapItem> {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.items = ["1", "2"]
+//        self.items = ["1", "2"]
         
         performLocalSearch()
     }
@@ -35,8 +46,8 @@ class LocationSearchController: LBTAListController<LocationSearchCell, String> {
         
         search.start { (resp, err) in
             
-            print(resp?.mapItems)
-            
+//            print(resp?.mapItems)
+            self.items = resp?.mapItems ?? []
         }
     }
 }
