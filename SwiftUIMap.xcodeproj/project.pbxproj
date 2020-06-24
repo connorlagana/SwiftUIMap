@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		433DE63E24A3C4770005541A /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DE63D24A3C4770005541A /* LocationSearchController.swift */; };
 		4373620924996C9D005E6C12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373620824996C9D005E6C12 /* AppDelegate.swift */; };
 		4373620B24996C9D005E6C12 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373620A24996C9D005E6C12 /* SceneDelegate.swift */; };
 		4373620D24996C9D005E6C12 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373620C24996C9D005E6C12 /* ContentView.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		433DE63D24A3C4770005541A /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
 		4373620524996C9D005E6C12 /* SwiftUIMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4373620824996C9D005E6C12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4373620A24996C9D005E6C12 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				4376EA4424A18D410046B76F /* DirectionsController.swift */,
+				433DE63D24A3C4770005541A /* LocationSearchController.swift */,
 			);
 			path = Directions;
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				4373621E24996E45005E6C12 /* MainController.swift in Sources */,
 				4376EA4524A18D410046B76F /* DirectionsController.swift in Sources */,
 				4373620924996C9D005E6C12 /* AppDelegate.swift in Sources */,
+				433DE63E24A3C4770005541A /* LocationSearchController.swift in Sources */,
 				4373620B24996C9D005E6C12 /* SceneDelegate.swift in Sources */,
 				4373620D24996C9D005E6C12 /* ContentView.swift in Sources */,
 				43A375E024A05EB100FCAD82 /* LocationCarouselController.swift in Sources */,
