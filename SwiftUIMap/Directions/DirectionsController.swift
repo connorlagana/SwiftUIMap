@@ -14,7 +14,7 @@ import SwiftUI
 class DirectionsController: UIViewController, MKMapViewDelegate {
     
     let mapView = MKMapView()
-    let navBar = UIView(backgroundColor: .init(red: 120/255, green: 180/255, blue: 225/255, alpha: 1))
+    let navBar = UIView(backgroundColor: .init(red: 120/255, green: 220/255, blue: 165/255, alpha: 1))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,13 +80,13 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let polyLineRenderer = MKPolylineRenderer(overlay: overlay)
-        polyLineRenderer.strokeColor = .init(red: 120/255, green: 180/255, blue: 225/255, alpha: 1)
+        polyLineRenderer.strokeColor = .init(red: 120/255, green: 220/255, blue: 165/255, alpha: 1)
         polyLineRenderer.lineWidth = 5
         return polyLineRenderer
     }
     
-    let startTextField = UITextField(placeholder: "Start")
-    let endTextField = UITextField(placeholder: "End")
+    let startTextField = IndentedTextField(padding: 12, cornerRadius: 5)
+    let endTextField = IndentedTextField(padding: 12, cornerRadius: 5)
     
     fileprivate func setupNavBarUI() {
         
@@ -94,15 +94,31 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         navBar.setupShadow(opacity: 0.5, radius: 5)
         navBar.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -120, right: 0))
         
+        startTextField.attributedPlaceholder = .init(string: "Start", attributes: [.foregroundColor: UIColor.init(white: 1, alpha: 0.7)])
+        endTextField.attributedPlaceholder = .init(string: "End", attributes: [.foregroundColor: UIColor.init(white: 1, alpha: 0.7)])
+        
         [startTextField, endTextField].forEach { (tf) in
-//            tf.backgroundColor = .yellow
+            tf.backgroundColor = .init(white: 1, alpha: 0.3)
         }
         
-        let containerView = UIView(backgroundColor: .blue)
+        let containerView = UIView(backgroundColor: .clear)
+        
+        let startIcon = UIImageView(image: #imageLiteral(resourceName: "start_location_circles"), contentMode: .scaleAspectFit)
+        let endIcon = UIImageView(image: #imageLiteral(resourceName: "annotation_icon").withRenderingMode(.alwaysTemplate), contentMode: .scaleAspectFit)
+        
+        startIcon.constrainWidth(20)
+        endIcon.constrainWidth(20)
+        endIcon.tintColor = .white
+        
         navBar.addSubview(containerView)
         containerView.fillSuperviewSafeAreaLayoutGuide()
         containerView
-            .stack(startTextField, endTextField, spacing: 12, distribution: .fillEqually)
+            .stack(
+                containerView.hstack(startIcon, startTextField, spacing: 16),
+                containerView.hstack(endIcon, endTextField, spacing: 16),
+                spacing: 12,
+                distribution: .fillEqually
+                )
             .withMargins(.init(top: 0, left: 12, bottom: 12, right: 12))
     }
     
