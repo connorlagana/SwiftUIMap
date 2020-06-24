@@ -16,15 +16,17 @@ class LocationSearchCell: LBTAListCell<MKMapItem> {
     override var item: MKMapItem! {
         didSet {
             nameLabel.text = item.name
+            addressLabel.text = item.address()
             print(item.name)
         }
     }
     
-    let nameLabel = UILabel(text: "Name")
+    let nameLabel = UILabel(text: "Name", font: .boldSystemFont(ofSize: 16))
+    let addressLabel = UILabel(text: "Address", font: .boldSystemFont(ofSize: 16))
     
     override func setupViews() {
 //        backgroundColor = .green
-        stack(nameLabel)
+        stack(nameLabel, addressLabel).withMargins(.allSides(16))
     }
 }
 
@@ -55,7 +57,7 @@ class LocationSearchController: LBTAListController<LocationSearchCell, MKMapItem
 
 extension LocationSearchController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 60)
+        return .init(width: view.frame.width, height: 80)
     }
 }
 
