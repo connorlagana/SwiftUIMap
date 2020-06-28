@@ -33,6 +33,27 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         
 //        setupStartEndDummyAnnotations()
 //        requestForDirections()
+        setupRouteButton()
+    }
+    
+    fileprivate func setupRouteButton() {
+        let showRouteButton = UIButton(title: "Show Route", titleColor: .black, font: .boldSystemFont(ofSize: 16), backgroundColor: .white, target: self, action: #selector(handleShowRoute))
+        
+        view.addSubview(showRouteButton)
+        
+        showRouteButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        showRouteButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        showRouteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12).isActive = true
+        showRouteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12).isActive = true
+        showRouteButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4).isActive = true
+    }
+    
+    @objc fileprivate func handleShowRoute() {
+        
+        let routesController = UIViewController()
+        routesController.view.backgroundColor = .magenta
+        present(routesController, animated: true)
         
     }
     
