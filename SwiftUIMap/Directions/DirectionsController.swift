@@ -82,7 +82,28 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         
     }
     
-    class RoutesController: LBTAListController<RouteStepCell, MKRoute.Step>, UICollectionViewDelegateFlowLayout {
+//    class RouteHeader: UICollectionReusableView {
+//        
+//        
+//        override init(frame: CGRect) {
+//            super.init(frame: frame)
+//            
+//            backgroundColor = .green
+//            
+//        }
+//        
+//        required init?(coder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+//        
+//    }
+    
+    class RoutesController: LBTAListHeaderController<RouteStepCell, MKRoute.Step, RouteHeader>, UICollectionViewDelegateFlowLayout {
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+            .init(width: 0, height: 120)
+        }
+        
         override func viewDidLoad() {
             super.viewDidLoad()
             
