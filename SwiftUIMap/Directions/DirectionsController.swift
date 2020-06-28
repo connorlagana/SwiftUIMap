@@ -51,9 +51,27 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
     
     @objc fileprivate func handleShowRoute() {
         
-        let routesController = UIViewController()
-        routesController.view.backgroundColor = .magenta
+        let routesController = RoutesController()
         present(routesController, animated: true)
+        
+    }
+    
+    class RouteStepCell: LBTAListCell<String> {
+        override func setupViews() {
+            backgroundColor = .red
+        }
+        
+    }
+    
+    class RoutesController: LBTAListController<RouteStepCell, String>, UICollectionViewDelegateFlowLayout {
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            self.items = ["1", "2", "3"]
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            .init(width: view.frame.width, height: 70)
+        }
         
     }
     
