@@ -89,6 +89,7 @@ class MainController: UIViewController, CLLocationManagerDelegate {
     }
     
     let searchTextField = UITextField(placeholder: "Search query")
+    var listener: Any!
     
     fileprivate func setupSearchUI() {
         let whiteContainer = UIView(backgroundColor: .white)
@@ -104,7 +105,7 @@ class MainController: UIViewController, CLLocationManagerDelegate {
         
         // NEW SCHOOL Search Throttling
         // search on the last keystroke of text changes and basically wait 500 milliseconds
-        _ = NotificationCenter.default
+        listener = NotificationCenter.default
             .publisher(for: UITextField.textDidChangeNotification, object: searchTextField)
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
             .sink { (_) in
