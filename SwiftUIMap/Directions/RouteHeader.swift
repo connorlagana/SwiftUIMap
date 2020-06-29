@@ -15,12 +15,23 @@ import SwiftUI
 //}
 
 class RouteHeader: UICollectionReusableView {
+    
+    let nameLabel: UILabel = UILabel(text: "Name", font: .systemFont(ofSize: 16), textColor: .black)
+    let distanceLabel: UILabel = UILabel(text: "Distance", font: .systemFont(ofSize: 16), textColor: .black)
+    let estimatedTimeLabel: UILabel = UILabel(text: "Time", font: .systemFont(ofSize: 16), textColor: .black)
 
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
         backgroundColor = .green
+        
+        hstack(stack(nameLabel,
+                     distanceLabel,
+                     estimatedTimeLabel,
+                     spacing: 8),
+               alignment: .center
+        ).withMargins(.allSides(16))
 
     }
 
@@ -33,7 +44,7 @@ class RouteHeader: UICollectionReusableView {
 struct RouteHeader_Previews: PreviewProvider {
     static var previews: some View {
 //        RouteHeader()
-//        Text("helo")
+//        Text("helo woprld")
         Container()
     }
     
