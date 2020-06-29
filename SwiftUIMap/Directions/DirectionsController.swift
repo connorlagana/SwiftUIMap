@@ -107,12 +107,27 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
         override func setupHeader(_ header: RouteHeader) {
             header.nameLabel.attributedText = header.generateAttributedString(title: "Route", description: route.name)
             
+            //route.distance needs to be converted into miles
             let miles = route.distance * 0.00062137
-            
             let milesStr = String(format: "%.2f mi", miles)
             
             header.distanceLabel.attributedText = header.generateAttributedString(title: "Distance", description: milesStr)
-            header.estimatedTimeLabel
+            
+            var timeStr: String = ""
+            
+            if route.expectedTravelTime > 3600 {
+                let hours = Int(route.expectedTravelTime / 60 / 60)
+                let minutes = Int((route.expectedTravelTime.truncatingRemainder(dividingBy: 60 * 60)) / 60)
+                
+                timeStr = String(format: "%d hr %d min", hours, minutes)
+            }
+            
+            else {
+                let time = Int(route.expectedTravelTime / 60)
+                timeStr = String(format: "%d min", time)
+            }
+            
+            header.estimatedTimeLabel.attributedText = header.generateAttributedString(title: "Est Time: ", description: timeStr)
         }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
