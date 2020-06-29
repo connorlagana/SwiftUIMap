@@ -16,7 +16,7 @@ import SwiftUI
 
 class RouteHeader: UICollectionReusableView {
     
-    let nameLabel: UILabel = UILabel(text: "Name", font: .systemFont(ofSize: 16), textColor: .black)
+    var nameLabel: UILabel = UILabel(text: "Name", font: .systemFont(ofSize: 16), textColor: .black)
     let distanceLabel: UILabel = UILabel(text: "Distance", font: .systemFont(ofSize: 16), textColor: .black)
     let estimatedTimeLabel: UILabel = UILabel(text: "Time", font: .systemFont(ofSize: 16), textColor: .black)
 
@@ -24,7 +24,7 @@ class RouteHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        backgroundColor = .green
+//        backgroundColor = .green
         
         hstack(stack(nameLabel,
                      distanceLabel,
@@ -32,7 +32,18 @@ class RouteHeader: UICollectionReusableView {
                      spacing: 8),
                alignment: .center
         ).withMargins(.allSides(16))
-
+        
+        nameLabel.attributedText = generateAttributedString(title: "Route", description: "US 101S")
+        distanceLabel.attributedText = generateAttributedString(title: "Distance", description: "69mi")
+    }
+    
+    public func generateAttributedString(title: String, description: String) -> NSAttributedString {
+        
+        let attStr = NSMutableAttributedString(string: title + ": ", attributes: [.font: UIFont.systemFont(ofSize: 16)])
+        
+        attStr.append(.init(string: description, attributes: [.font: UIFont.systemFont(ofSize: 16)]))
+        
+        return attStr
     }
 
     required init?(coder: NSCoder) {

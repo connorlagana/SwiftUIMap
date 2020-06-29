@@ -52,6 +52,7 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
     @objc fileprivate func handleShowRoute() {
         
         let routesController = RoutesController()
+        routesController.route = currentlyShowingRoute
         routesController.items = self.currentlyShowingRoute?.steps.filter{!$0.instructions.isEmpty} ?? []
         
         
@@ -99,6 +100,20 @@ class DirectionsController: UIViewController, MKMapViewDelegate {
 //    }
     
     class RoutesController: LBTAListHeaderController<RouteStepCell, MKRoute.Step, RouteHeader>, UICollectionViewDelegateFlowLayout {
+        
+        //bang operator to show that the route value will be set before being accessed
+        var route: MKRoute!
+        
+        override func setupHeader(_ header: RouteHeader) {
+            header.nameLabel.attributedText = header.generateAttributedString(title: "Route", description: route.name)
+            
+            let miles = route.distance * 0.00062137
+            
+            let milesStr = String(format: "%.2f mi", miles)
+            
+            header.distanceLabel.attributedText = header.generateAttributedString(title: "Distance", description: milesStr)
+            header.estimatedTimeLabel
+        }
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
             .init(width: 0, height: 120)
