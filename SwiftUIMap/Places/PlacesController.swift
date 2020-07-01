@@ -11,7 +11,7 @@ import LBTATools
 import MapKit
 import GooglePlaces
 
-class PlacesController: UIViewController, CLLocationManagerDelegate {
+class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
@@ -21,6 +21,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
         
         view.addSubview(mapView)
         mapView.fillSuperview()
+        mapView.delegate = self
         mapView.showsUserLocation = true
         locationManager.delegate = self
         
@@ -50,6 +51,28 @@ class PlacesController: UIViewController, CLLocationManagerDelegate {
             
             self?.mapView.showAnnotations(self?.mapView.annotations ?? [], animated: false)
         }
+    }
+    
+    class PlaceAnnotation: MKPointAnnotation {
+        let place: GMSPlace
+        init(place: GMSPlace) {
+            self.place = place
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if !(annotation is PlaceAnnotation) { return nil }
+        
+        let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
+        annotationView.canShowCallout = true
+        
+        if let placeAnnotation = annotation as? PlaceAnnotation {
+            
+            print(placeAnnotation.place.types)
+//            if placeAnnotation.place.types
+            annotationView.image = #imageLiteral(resourceName: "tourist")
+        }
+        return annotationView
     }
     
     fileprivate func requestForLocationAuthorization() {
