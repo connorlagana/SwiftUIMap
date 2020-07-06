@@ -26,6 +26,28 @@ class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDe
         locationManager.delegate = self
         
         requestForLocationAuthorization()
+        
+        setupSelectedAnnotationHUD()
+    }
+    
+    let hudNameLabel = UILabel(text: "Name", font: .boldSystemFont(ofSize: 16))
+    let hudAddressLabel = UILabel(text: "Address", font: .systemFont(ofSize: 16))
+    let hudTypesLabel = UILabel(text: "Types", textColor: .gray)
+    lazy var infoButton = UIButton(type: .infoLight)
+    let hudContainer = UIView(backgroundColor: .white)
+    
+    fileprivate func setupSelectedAnnotationHUD() {
+        view.addSubview(hudContainer)
+        hudContainer.layer.cornerRadius = 5
+        hudContainer.setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .darkGray)
+        hudContainer.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .allSides(16), size: .init(width: 0, height: 125))
+        
+        let topRow = UIView()
+        topRow.hstack(hudNameLabel, infoButton.withWidth(44))
+        hudContainer.hstack(hudContainer.stack(topRow,
+                             hudAddressLabel,
+                             hudTypesLabel, spacing: 8),
+                   alignment: .center).withMargins(.allSides(16))
     }
     
     let client = GMSPlacesClient()
@@ -42,7 +64,7 @@ class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDe
                 
                 let place = likelihood.place
                 
-                let annotation = MKPointAnnotation()
+                let annotation = PlaceAnnotation(place: place)
                 annotation.title = place.name
                 annotation.coordinate = place.coordinate
                 
@@ -64,15 +86,84 @@ class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDe
         if !(annotation is PlaceAnnotation) { return nil }
         
         let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "id")
-        annotationView.canShowCallout = true
         
         if let placeAnnotation = annotation as? PlaceAnnotation {
-            
-            print(placeAnnotation.place.types)
-//            if placeAnnotation.place.types
-            annotationView.image = #imageLiteral(resourceName: "tourist")
+            let types = placeAnnotation.place.types
+            if let firstType = types?.first {
+                if firstType == "bar" {
+                    annotationView.image = UIImage(imageLiteralResourceName: "bar")
+                } else if firstType == "restaurant" {
+                    annotationView.image = UIImage(imageLiteralResourceName: "restaurant")
+                } else {
+                    annotationView.image = #imageLiteral(resourceName: "tourist")
+                }
+            }
         }
+        
         return annotationView
+    }
+    
+    var currentCustomCallout: UIView?
+    
+    fileprivate func setupHUD(view: MKAnnotationView) {
+        guard let annotation = view.annotation as? PlaceAnnotation else { return }
+        
+        let place = annotation.place
+        hudNameLabel.text = place.name
+        hudAddressLabel.text = place.formattedAddress
+        hudTypesLabel.text = place.types?.joined(separator: ", ")
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        setupHUD(view: view)
+        
+        currentCustomCallout?.removeFromSuperview()
+        
+        let customCalloutContainer = CalloutContainer()
+        
+        view.addSubview(customCalloutContainer)
+        
+        let widthAnchor = customCalloutContainer.widthAnchor.constraint(equalToConstant: 100)
+        widthAnchor.isActive = true
+        let heightAnchor = customCalloutContainer.heightAnchor.constraint(equalToConstant: 200)
+        heightAnchor.isActive = true
+        customCalloutContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        customCalloutContainer.bottomAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        
+        currentCustomCallout = customCalloutContainer
+        
+        // look up our photo
+        
+        guard let firstPhotoMetadata = (view.annotation as? PlaceAnnotation)?.place.photos?.first else { return }
+        
+        self.client.loadPlacePhoto(firstPhotoMetadata) { [weak self] (image, err) in
+            if let err = err {
+                print("Failed to load photo for place:", err)
+                return
+            }
+            
+            guard let image = image else { return }
+            
+            guard let bestSize = self?.bestCalloutImageSize(image: image) else { return }
+            widthAnchor.constant = bestSize.width
+            heightAnchor.constant = bestSize.height
+            
+            customCalloutContainer.imageView.image = image
+            customCalloutContainer.nameLabel.text = (view.annotation as? PlaceAnnotation)?.place.name
+        }
+    }
+    
+    fileprivate func bestCalloutImageSize(image: UIImage) -> CGSize {
+        if image.size.width > image.size.height {
+            // w1/h1 = w2/h2
+            let newWidth: CGFloat = 300
+            let newHeight = newWidth / image.size.width * image.size.height
+            return .init(width: newWidth, height: newHeight)
+        } else {
+            let newHeight: CGFloat = 200
+            let newWidth = newHeight / image.size.height * image.size.width
+            return .init(width: newWidth, height: newHeight)
+        }
     }
     
     fileprivate func requestForLocationAuthorization() {

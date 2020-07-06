@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		433DE63E24A3C4770005541A /* LocationSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433DE63D24A3C4770005541A /* LocationSearchController.swift */; };
-		4340F21124A90D1100761D5E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 4340F21024A90D1100761D5E /* SwiftPackageProductDependency */; };
+		4340F21124A90D1100761D5E /* JGProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 4340F21024A90D1100761D5E /* JGProgressHUD */; };
+		4355C72324B3940F00ED352A /* CustomCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4355C72224B3940F00ED352A /* CustomCallout.swift */; };
 		4364F1E824AA8B7900900250 /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4364F1E724AA8B7900900250 /* PlacesController.swift */; };
 		4373620924996C9D005E6C12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373620824996C9D005E6C12 /* AppDelegate.swift */; };
 		4373620B24996C9D005E6C12 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373620A24996C9D005E6C12 /* SceneDelegate.swift */; };
@@ -17,7 +18,7 @@
 		4373621224996CA0005E6C12 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4373621124996CA0005E6C12 /* Preview Assets.xcassets */; };
 		4373621524996CA0005E6C12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4373621324996CA0005E6C12 /* LaunchScreen.storyboard */; };
 		4373621E24996E45005E6C12 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4373621D24996E45005E6C12 /* MainController.swift */; };
-		43736221249974DA005E6C12 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 43736220249974DA005E6C12 /* SwiftPackageProductDependency */; };
+		43736221249974DA005E6C12 /* LBTATools in Frameworks */ = {isa = PBXBuildFile; productRef = 43736220249974DA005E6C12 /* LBTATools */; };
 		4376EA4224A127CE0046B76F /* MKMapItem+Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376EA4124A127CE0046B76F /* MKMapItem+Address.swift */; };
 		4376EA4524A18D410046B76F /* DirectionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4376EA4424A18D410046B76F /* DirectionsController.swift */; };
 		43A375E024A05EB100FCAD82 /* LocationCarouselController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A375DF24A05EB100FCAD82 /* LocationCarouselController.swift */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		182A3767AE21757471C81923 /* Pods_SwiftUIMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftUIMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		433DE63D24A3C4770005541A /* LocationSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchController.swift; sourceTree = "<group>"; };
+		4355C72224B3940F00ED352A /* CustomCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCallout.swift; sourceTree = "<group>"; };
 		4364F1E724AA8B7900900250 /* PlacesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
 		4373620524996C9D005E6C12 /* SwiftUIMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4373620824996C9D005E6C12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,8 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4340F21124A90D1100761D5E /* BuildFile in Frameworks */,
-				43736221249974DA005E6C12 /* BuildFile in Frameworks */,
+				4340F21124A90D1100761D5E /* JGProgressHUD in Frameworks */,
+				43736221249974DA005E6C12 /* LBTATools in Frameworks */,
 				CC6AE8777C68344A483D0272 /* Pods_SwiftUIMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -66,7 +68,6 @@
 				A6813A62248321958D9059AF /* Pods-SwiftUIMap.debug.xcconfig */,
 				C8BBD14CFBD9F0622EF26ACF /* Pods-SwiftUIMap.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -74,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				4364F1E724AA8B7900900250 /* PlacesController.swift */,
+				4355C72224B3940F00ED352A /* CustomCallout.swift */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -168,8 +170,8 @@
 			);
 			name = SwiftUIMap;
 			packageProductDependencies = (
-				43736220249974DA005E6C12 /* SwiftPackageProductDependency */,
-				4340F21024A90D1100761D5E /* SwiftPackageProductDependency */,
+				43736220249974DA005E6C12 /* LBTATools */,
+				4340F21024A90D1100761D5E /* JGProgressHUD */,
 			);
 			productName = SwiftUIMap;
 			productReference = 4373620524996C9D005E6C12 /* SwiftUIMap.app */;
@@ -200,8 +202,8 @@
 			);
 			mainGroup = 437361FC24996C9D005E6C12;
 			packageReferences = (
-				4373621F249974DA005E6C12 /* RemoteSwiftPackageReference */,
-				4340F20F24A90D1100761D5E /* RemoteSwiftPackageReference */,
+				4373621F249974DA005E6C12 /* XCRemoteSwiftPackageReference "LBTATools" */,
+				4340F20F24A90D1100761D5E /* XCRemoteSwiftPackageReference "JGProgressHUD" */,
 			);
 			productRefGroup = 4373620624996C9D005E6C12 /* Products */;
 			projectDirPath = "";
@@ -281,6 +283,7 @@
 				43E93BE224A92D3000BAEDC9 /* RouteHeader.swift in Sources */,
 				4364F1E824AA8B7900900250 /* PlacesController.swift in Sources */,
 				4373620D24996C9D005E6C12 /* ContentView.swift in Sources */,
+				4355C72324B3940F00ED352A /* CustomCallout.swift in Sources */,
 				43A375E024A05EB100FCAD82 /* LocationCarouselController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,7 +482,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4340F20F24A90D1100761D5E /* RemoteSwiftPackageReference */ = {
+		4340F20F24A90D1100761D5E /* XCRemoteSwiftPackageReference "JGProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JonasGessner/JGProgressHUD";
 			requirement = {
@@ -487,7 +490,7 @@
 				minimumVersion = 2.1.0;
 			};
 		};
-		4373621F249974DA005E6C12 /* RemoteSwiftPackageReference */ = {
+		4373621F249974DA005E6C12 /* XCRemoteSwiftPackageReference "LBTATools" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bhlvoong/LBTATools.git";
 			requirement = {
@@ -498,14 +501,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4340F21024A90D1100761D5E /* SwiftPackageProductDependency */ = {
+		4340F21024A90D1100761D5E /* JGProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4340F20F24A90D1100761D5E /* RemoteSwiftPackageReference */;
+			package = 4340F20F24A90D1100761D5E /* XCRemoteSwiftPackageReference "JGProgressHUD" */;
 			productName = JGProgressHUD;
 		};
-		43736220249974DA005E6C12 /* SwiftPackageProductDependency */ = {
+		43736220249974DA005E6C12 /* LBTATools */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4373621F249974DA005E6C12 /* RemoteSwiftPackageReference */;
+			package = 4373621F249974DA005E6C12 /* XCRemoteSwiftPackageReference "LBTATools" */;
 			productName = LBTATools;
 		};
 /* End XCSwiftPackageProductDependency section */
