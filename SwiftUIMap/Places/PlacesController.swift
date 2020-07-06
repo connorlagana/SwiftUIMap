@@ -10,6 +10,7 @@ import SwiftUI
 import LBTATools
 import MapKit
 import GooglePlaces
+import JGProgressHUD
 
 class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
@@ -36,7 +37,78 @@ class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDe
     lazy var infoButton = UIButton(type: .infoLight)
     let hudContainer = UIView(backgroundColor: .white)
     
+    @objc func handleShowInfo() {
+        guard let selectedAnno = mapView.selectedAnnotations.first as? PlaceAnnotation else { return }
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Loading photos.."
+        hud.show(in: view)
+        
+        guard let placeId = selectedAnno.place.placeID else { return }
+        
+        client.lookUpPhotos(forPlaceID: placeId) { [weak self] (list, err) in
+            if err != nil {
+                hud.dismiss()
+                return
+            }
+            
+            let dispatch = DispatchGroup()
+            
+            var imageArr: [UIImage] = []
+            
+            list?.results.forEach({ (photoMetadata) in
+                dispatch.enter()
+                
+                self?.client.loadPlacePhoto(photoMetadata) { (image, err) in
+                    dispatch.leave()
+                    guard let image = image else { return }
+                    imageArr.append(image)
+                }
+            })
+            
+            dispatch.notify(queue: .main) {
+                hud.dismiss()
+                let cont = PlacePhotosController()
+                cont.items = imageArr
+                self?.present(UINavigationController(rootViewController: cont), animated: true)
+            }
+            
+        }
+    }
+    
+
+    class PhotoCell: LBTAListCell<UIImage> {
+        
+        override var item: UIImage! {
+            didSet {
+                imageView.image = item
+            }
+        }
+        
+        let imageView = UIImageView(image: nil, contentMode: .scaleAspectFill)
+        
+        override func setupViews() {
+            
+            addSubview(imageView)
+            imageView.fillSuperview()
+        }
+    }
+    
+    class PlacePhotosController: LBTAListController<PhotoCell, UIImage>, UICollectionViewDelegateFlowLayout {
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            .init(width: view.frame.width, height: 300)
+        }
+        
+        override func viewDidLoad() {
+            super.viewDidLoad()
+            navigationItem.title = "Photos"
+        }
+    }
+    
     fileprivate func setupSelectedAnnotationHUD() {
+        
+        infoButton.addTarget(self, action: #selector(handleShowInfo), for: .touchUpInside)
+        
         view.addSubview(hudContainer)
         hudContainer.layer.cornerRadius = 5
         hudContainer.setupShadow(opacity: 0.2, radius: 5, offset: .zero, color: .darkGray)
@@ -131,8 +203,6 @@ class PlacesController: UIViewController, CLLocationManagerDelegate, MKMapViewDe
         customCalloutContainer.bottomAnchor.constraint(equalTo: view.topAnchor).isActive = true
         
         currentCustomCallout = customCalloutContainer
-        
-        // look up our photo
         
         guard let firstPhotoMetadata = (view.annotation as? PlaceAnnotation)?.place.photos?.first else { return }
         
